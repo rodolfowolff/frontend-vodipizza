@@ -50,30 +50,10 @@ const Footer = () => {
       <h2 id='footerHeading' className='sr-only'>
         Rodapé
       </h2>
-      <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8'>
-        <div className='xl:grid xl:grid-cols-3 xl:gap-8'>
-          <div className='space-y-8 xl:col-span-1'>
-            <img className='h-10' src={Logo} alt='Vo Di Pizza Logo' />
-            <p className='text-blue-gray-500 text-base'>
-              Somos especializados em pizzas.
-            </p>
-            <div className='flex space-x-6'>
-              {navigation.social.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  target="_blank" 
-                  rel="noreferrer"
-                  className='text-gray-400 hover:text-gray-500'
-                >
-                  <span className='sr-only'>{item.name}</span>
-                  <item.icon className='h-6 w-6' aria-hidden='true' />
-                </a>
-              ))}
-            </div>
-          </div>
-          <div className='mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2 font-hind '>
-            <div className='md:grid md:grid-cols-2 md:gap-8'>
+      <div className='grid justify-center px-10'>
+        <div className='xl:grid xl:grid-cols-4 lg:gap-16 xl:gap-9 xl:ml-16'>
+          <div className='mt-12 grid grid-cols-2 gap-9 lg:mt-0 sm:col-span-3 md:grid-cols-3 md:justify-items-center font-hind '>
+            <div className='md:grid md:gap-20'>
               <div>
                 <h3 className='text-sm font-bold text-orange-600 tracking-widest uppercase'>
                   Vo Di Pizza
@@ -91,7 +71,10 @@ const Footer = () => {
                   ))}
                 </ul>
               </div>
-              <div className='mt-12 md:mt-0'>
+              </div>
+              <div className='md:grid md:gap-9'>
+              <div>
+              {/* <div className='mt-12 md:mt-0'> */}
                 <h3 className='text-sm font-bold text-orange-600 tracking-widest uppercase'>
                 Ajuda
                 </h3>
@@ -108,8 +91,8 @@ const Footer = () => {
                   ))}
                 </ul>
               </div>
-            </div>
-            <div className='md:grid md:grid-cols-2 md:gap-8'>
+              </div>
+            <div className='md:grid md:gap-9'>
               <div>
                 <h3 className='text-sm font-bold text-orange-600 tracking-widest uppercase'>
                   Nossos produtos
@@ -129,8 +112,28 @@ const Footer = () => {
               </div>
             </div>
           </div>
+          <div className='grid justify-center justify-items-center space-y-8 xl:col-span-1 mt-7 md:mt-12 xl:mt-0 mx-auto'>
+            <img className='h-10' src={Logo} alt='Vo Di Pizza Logo' />
+            <p className='text-blue-gray-500 text-base'>
+              Somos especializados em pizzas.
+            </p>
+            <div className='flex space-x-6'>
+              {navigation.social.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank" 
+                  rel="noreferrer"
+                  className='text-gray-400 hover:text-gray-500'
+                >
+                  <span className='sr-only'>{item.name}</span>
+                  <item.icon className='h-6 w-6' aria-hidden='true' />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className='mt-12 border-t border-blue-gray-200 pt-8'>
+        <div className='text-center mt-12 border-t border-blue-gray-200 pt-8'>
           <p className='text-base text-blue-gray-400 xl:text-center font-hind'>
             &copy; {new Date().getFullYear()} Vo di Pizza.
           </p>
