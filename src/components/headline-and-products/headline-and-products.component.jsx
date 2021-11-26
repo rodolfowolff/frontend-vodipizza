@@ -16,14 +16,14 @@ const HeadlineAndProducts = ({
   setPageNumber,
 }) => {
   return (
-    <div className='relative bg-blue-gray-50 py-16 sm:py-24 lg:py-32'>
+    <div className='relative bg-blue-gray-50 py-16 sm:py-24 lg:py-10'>
       <div className='relative pb-12'>
         {showHeadline && (
           <SectionHeadline tag={tag} headline={headline}>
             {children}
           </SectionHeadline>
         )}
-        <div className='mt-12 mx-auto max-w-md px-4 grid gap-8 sm:max-w-lg sm:px-6 lg:px-8 lg:grid-cols-3 lg:max-w-7xl'>
+        <div className='mt-12 mx-auto max-w-md px-4 grid gap-8 sm:max-w-lg sm:px-6 lg:px-8 lg:grid-cols-3 lg:max-w-screen-xl'>
           {loading
             ? [...Array(3)].map((_, i) => <ProductCardSkeleton key={i} />)
             : products?.map((product) => (
@@ -32,7 +32,7 @@ const HeadlineAndProducts = ({
         </div>
       </div>
       {showPagination && (
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <div className='max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='max-w-3xl mx-auto'>
             <Pagination
               pages={pages}
