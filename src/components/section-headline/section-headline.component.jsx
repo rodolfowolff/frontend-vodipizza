@@ -1,6 +1,6 @@
 const SectionHeadline = ({ tag, headline, children }) => {
   return (
-    <div className='text-center mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl'>
+    <div className='text-center mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-screen-xl'>
       <h2 className='text-base font-semibold tracking-wider text-rose-600 uppercase font-hind'>
         {tag}
       </h2>
