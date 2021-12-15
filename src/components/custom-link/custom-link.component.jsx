@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const CustomLink = ({ url, custom, children, type, ...otherProps }) => {
@@ -8,7 +9,7 @@ const CustomLink = ({ url, custom, children, type, ...otherProps }) => {
       <button
         {...otherProps}
         className={`w-full text-left block px-4 py-2 ${
-          custom ? custom : 'text-sm text-blue-gray-700 hover:bg-blue-gray-100'
+          custom ? custom : 'text-sm text-blue-gray-500 hover:bg-blue-gray-100'
         } font-hind focus:outline-none`}
       >
         {children}
@@ -32,7 +33,7 @@ const CustomLink = ({ url, custom, children, type, ...otherProps }) => {
         className={`${
           location.pathname === url
             ? 'border-rose-600 text-blue-gray-900 '
-            : 'border-transparent text-blue-gray-500 hover:border-blue-gray-300 hover:text-blue-gray-700'
+            : 'border-transparent text-blue-gray-500 hover:border-blue-gray-300 hover:text-blue-gray-500'
         } inline-flex items-center px-1 pt-1 border-b-2 capitalize text-sm font-medium font-hind`}
       >
         {children}
@@ -45,7 +46,7 @@ const CustomLink = ({ url, custom, children, type, ...otherProps }) => {
         {...otherProps}
         className={`${
           location.pathname === url
-            ? 'bg-red-50 border-red-500 text-red-700'
+            ? 'bg-red-50 border-red-500 text-red-500'
             : 'border-transparent text-blue-gray-600 hover:bg-blue-gray-50 hover:border-blue-gray-300 hover:text-blue-gray-800'
         } block pl-3 pr-4 py-2 border-l-4 text-base font-medium font-hind`}
       >
@@ -58,7 +59,7 @@ const CustomLink = ({ url, custom, children, type, ...otherProps }) => {
         to={url}
         {...otherProps}
         className={`block px-4 py-2 ${
-          custom ? custom : 'text-sm text-blue-gray-700 hover:bg-blue-gray-100'
+          custom ? custom : 'text-sm text-blue-gray-500 hover:bg-blue-gray-100'
         } font-hind`}
       >
         {children}
