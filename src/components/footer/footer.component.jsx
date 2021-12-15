@@ -1,3 +1,4 @@
+import React from 'react';
 import Logo from '../../assets/images/vo_di_pizza_logo.png';
 
 const navigation = {
@@ -11,10 +12,10 @@ const navigation = {
     { name: 'Contato', href: '#' },
     { name: 'Como fazer um pedido', href: '#' },
   ],
-  products: [
-    { name: 'Pizzas Salgadas', href: '#' },
-    { name: 'Pizzas Doces', href: '#' },
-    { name: 'Outros', href: '#' },
+  function: [
+    { name: 'De terça-feira a Domingo', href: '#' },
+    { name: '18:00h - 04:00h', href: '#' },
+    { name: 'Segunda-feira - FECHADO', href: '#' },
   ],
   social: [
     {
@@ -50,7 +51,7 @@ const Footer = () => {
       <h2 id='footerHeading' className='sr-only'>
         Rodapé
       </h2>
-      <div className='grid justify-center px-10'>
+      <div className='grid justify-center px-10 mt-20'>
         <div className='xl:grid xl:grid-cols-4 lg:gap-16 xl:gap-9 xl:ml-16'>
           <div className='mt-12 grid grid-cols-2 gap-9 lg:mt-0 sm:col-span-3 md:grid-cols-3 md:justify-items-center font-hind '>
             <div className='md:grid md:gap-20'>
@@ -95,10 +96,10 @@ const Footer = () => {
             <div className='md:grid md:gap-9'>
               <div>
                 <h3 className='text-sm font-bold text-orange-600 tracking-widest uppercase'>
-                  Nossos produtos
+                  Funcionamento
                 </h3>
                 <ul className='mt-4 space-y-4'>
-                  {navigation.products.map((item) => (
+                  {navigation.function.map((item) => (
                     <li key={item.name}>
                       <a
                         href={item.href}
@@ -123,7 +124,7 @@ const Footer = () => {
                   key={item.name}
                   href={item.href}
                   target="_blank" 
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className='text-gray-400 hover:text-gray-500'
                 >
                   <span className='sr-only'>{item.name}</span>
@@ -133,7 +134,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className='text-center mt-12 border-t border-blue-gray-200 pt-8'>
+        <div className='text-center mt-12 border-t border-blue-gray-200 p-8'>
           <p className='text-base text-blue-gray-400 xl:text-center font-hind'>
             &copy; {new Date().getFullYear()} Vo di Pizza.
           </p>
