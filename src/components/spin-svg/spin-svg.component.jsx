@@ -1,3 +1,4 @@
+import React from 'react';
 const SpinSVG = ({ size, color, className }) => {
   return (
     <svg

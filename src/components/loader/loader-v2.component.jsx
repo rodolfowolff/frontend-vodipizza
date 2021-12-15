@@ -1,3 +1,4 @@
+import React from 'react';
 import SpinSVG from '../spin-svg/spin-svg.component';
 
 const LoaderV2 = ({size, color}) => {

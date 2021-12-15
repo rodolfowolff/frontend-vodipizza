@@ -1,3 +1,4 @@
+import React from 'react';
 const Loader = ({
   height = 'h-8',
   width = 'h-8',
