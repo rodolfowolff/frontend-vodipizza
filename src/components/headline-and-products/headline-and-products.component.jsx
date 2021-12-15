@@ -1,3 +1,4 @@
+import React from 'react';
 import SectionHeadline from '../section-headline/section-headline.component.jsx';
 import ProductCard from '../cards/product-card.component.jsx';
 import Pagination from '../pagination/pagination.component.jsx';
@@ -26,8 +27,8 @@ const HeadlineAndProducts = ({
         <div className='mt-12 mx-auto max-w-md px-4 grid gap-8 sm:max-w-lg sm:px-6 lg:px-8 lg:grid-cols-3 lg:max-w-screen-xl'>
           {loading
             ? [...Array(3)].map((_, i) => <ProductCardSkeleton key={i} />)
-            : products?.map((product) => (
-                <ProductCard product={product} key={product?._id} />
+            : products.map((product) => (
+                <ProductCard product={product} key={product._id} />
               ))}
         </div>
       </div>

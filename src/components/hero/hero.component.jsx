@@ -21,7 +21,7 @@ const Hero = () => {
               <CustomLink
                 url='/shop'
                 type='link-button'
-                custom='w-full flex px-8 py-3 text-base font-medium text-white bg-orange-600 hover:bg-orange-700 md:py-4 md:text-lg md:px-10'
+                custom='w-full flex px-8 py-3 text-base font-medium text-white bg-orange-600 hover:bg-orange-500 md:py-4 md:text-lg md:px-10'
               >
                 Veja o cardápio
               </CustomLink>

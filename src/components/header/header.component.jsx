@@ -1,3 +1,4 @@
+import React from 'react';
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
@@ -70,7 +71,7 @@ const Header = () => {
                     <CustomLink
                       url='/login'
                       type='link-button'
-                      custom='ml-5 px-4 py-2  text-base font-medium text-white bg-orange-600 hover:bg-orange-700'
+                      custom='ml-5 px-4 py-2  text-base font-medium text-white bg-orange-600 hover:bg-orange-500'
                     >
                       {SIGN_IN_BUTTON_HEADER}
                     </CustomLink>
@@ -103,7 +104,7 @@ const Header = () => {
                     type='button'
                     role='menuitem'
                     onClick={logoutHandler}
-                    custom='w-full flex px-8 py-3 rounded-full text-base font-medium text-white bg-orange-600 hover:bg-orange-700 md:py-4 md:text-lg md:px-10'
+                    custom='w-full flex px-8 py-3 rounded-full text-base font-medium text-white bg-orange-600 hover:bg-orange-500 md:py-4 md:text-lg md:px-10'
                   >
                     Sair
                   </CustomLink>
