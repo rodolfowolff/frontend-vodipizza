@@ -1,7 +1,8 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  content: ["./src/**/*.{html,s,jsx,ts,tsx}"],
+  // purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -21,8 +22,8 @@ module.exports = {
         orange: colors.orange,
         pink: colors.pink,
         teal: colors.teal,
-        'cool-gray': colors.coolGray,
-        'blue-gray': colors.blueGray,
+        'cool-gray': colors.gray,
+        'blue-gray': colors.slate,
       },
       screens: {
         xs: '520px',
@@ -40,9 +41,13 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-  ],
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+    [
+      require('@tailwindcss/aspect-ratio'),
+      require('@tailwindcss/forms'),
+      require('@tailwindcss/typography')
+    ]: {},
+  }
 };
