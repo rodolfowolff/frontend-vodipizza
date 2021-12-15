@@ -4,20 +4,20 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import rootReducer from './root-reducer';
 
-// const cartProductsFromStorage = localStorage.getItem('cart')
-//   ? JSON.parse(localStorage.getItem('cart'))
-//   : [];
+const cartProductsFromStorage = localStorage.getItem('cart')
+  ? JSON.parse(localStorage.getItem('cart'))
+  : [];
 
-// const initialState = {
-//   cart: {
-//     cartProducts: cartProductsFromStorage,
-//   },
-// };
+const initialState = {
+  cart: {
+    cartProducts: cartProductsFromStorage,
+  },
+};
 const middlewares = [thunk];
 
 const store = createStore(
   rootReducer,
-  // initialState,
+  initialState,
   composeWithDevTools(applyMiddleware(...middlewares))
 );
 
