@@ -9,7 +9,7 @@ const Pagination = ({ pages, page, setPageNumber }) => {
             onClick={() =>
               page > 1 ? setPageNumber(page - 1) : setPageNumber(1)
             }
-            className='cursor-pointer border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-blue-gray-500 hover:text-blue-gray-700 hover:border-blue-gray-300'
+            className='cursor-pointer border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-blue-gray-500 hover:text-blue-gray-500 hover:border-blue-gray-300'
           >
             <svg
               className='mr-3 h-5 w-5 text-blue-gray-400'
@@ -35,7 +35,7 @@ const Pagination = ({ pages, page, setPageNumber }) => {
               className={`${
                 x + 1 === page
                   ? 'border-rose-500 text-rose-600'
-                  : 'border-transparent text-blue-gray-500 hover:text-blue-gray-700 hover:border-blue-gray-300'
+                  : 'border-transparent text-blue-gray-500 hover:text-blue-gray-500 hover:border-blue-gray-300'
               } border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium cursor-pointer`}
             >
               {x + 1}
@@ -47,7 +47,7 @@ const Pagination = ({ pages, page, setPageNumber }) => {
             onClick={() =>
               page >= pages ? setPageNumber(page) : setPageNumber(page + 1)
             }
-            className='cursor-pointer border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-blue-gray-500 hover:text-blue-gray-700 hover:border-blue-gray-300'
+            className='cursor-pointer border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-blue-gray-500 hover:text-blue-gray-500 hover:border-blue-gray-300'
           >
             Próximo
             <svg
