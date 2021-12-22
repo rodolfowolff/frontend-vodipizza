@@ -62,9 +62,7 @@ export const deleteCategory = (slug) => async (dispatch, getState) => {
     dispatch({
       type: CATEGORY_DELETE_REQUEST,
     });
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -91,9 +89,7 @@ export const createCategory = (name) => async (dispatch, getState) => {
       type: CATEGORY_CREATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -126,9 +122,7 @@ export const updateCategory = (slug, name) => async (dispatch, getState) => {
       type: CATEGORY_UPDATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         'Content-Type': 'application/json',
