@@ -51,9 +51,9 @@ const Footer = () => {
       <h2 id='footerHeading' className='sr-only'>
         Rodapé
       </h2>
-      <div className='grid justify-center px-10 mt-20'>
+      <div className='grid justify-center px-10 mt-6 md:mt-10'>
         <div className='xl:grid xl:grid-cols-4 lg:gap-16 xl:gap-9 xl:ml-16'>
-          <div className='mt-12 grid grid-cols-2 gap-9 lg:mt-0 sm:col-span-3 md:grid-cols-3 md:justify-items-center font-hind '>
+          <div className='grid grid-cols-2 gap-9 sm:col-span-3 md:grid-cols-3 md:justify-items-center font-hind '>
             <div className='md:grid md:gap-20'>
               <div>
                 <h3 className='text-sm font-bold text-orange-600 tracking-widest uppercase'>
@@ -113,7 +113,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className='grid justify-center justify-items-center space-y-8 xl:col-span-1 mt-7 md:mt-12 xl:mt-0 mx-auto'>
+          <div className='grid justify-center justify-items-center space-y-8 xl:col-span-1 mt-4 md:mt-2 xl:mt-0 mx-auto'>
             <img className='h-10' src={Logo} alt='Vo Di Pizza Logo' />
             <p className='text-blue-gray-500 text-base'>
               Somos especializados em pizzas.
@@ -134,7 +134,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className='text-center mt-12 border-t border-blue-gray-200 p-8'>
+        <div className='text-center mt-6 border-t border-blue-gray-200 p-8'>
           <p className='text-base text-blue-gray-400 xl:text-center font-hind'>
             &copy; {new Date().getFullYear()} Vo di Pizza.
           </p>
