@@ -1,4 +1,4 @@
-export const SIGN_IN_BUTTON_HEADER = 'Conecte-se';
+export const SIGN_IN_BUTTON_HEADER = 'Entrar';
 export const SIGN_IN_PAGE = 'Conecte-se';
 export const SIGN_UP_PAGE = 'Crie a sua conta';
 export const SIGN_UP_PAGE_BUTTON_SUBMIT = 'Confirmar';

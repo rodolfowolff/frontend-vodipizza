@@ -35,67 +35,137 @@ import {
   REMOVE_PRODUCT_FROM_WISHLIST_FAIL,
 } from './user.types';
 import axios from 'axios';
+import { checkTokenExp } from '../../../utils/checkTokenExp';
+import { validRegister } from '../../../utils/validRegister';
 // import { generateGravatar } from '../../../utils/functions';
 
-export const logout = () => (dispatch) => {
-  // firebase.auth().signOut();
-  dispatch({ type: USER_LOGOUT });
-};
+// export const logout = () => (dispatch) => {
+//   // firebase.auth().signOut();
+//   dispatch({ type: USER_LOGOUT });
+// };
 
 export const login = (email, password) => async (dispatch) => {
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/login`, { email, password });
-    const idTokenResult = await data.getIdTokenResult();
-    dispatch({
-      type: USER_LOGIN_REQUEST,
-    });
-    dispatch({
-      type: USER_LOGIN_SUCCESS,
-      payload: { ...data, token: data.token },
-    });
-  } catch (error) {
-    dispatch({
-      type: USER_LOGIN_FAIL,
-      payload: 'Usuário ou senha incorretos!',
-    });
+
+    dispatch({ type: USER_LOGIN_REQUEST });
+
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: { ...data, token: data.access_token } });
+
+    localStorage.setItem('logged', 'vo-di-pizza');
+
+  } catch (err) {
+    dispatch({ type: USER_LOGIN_FAIL, payload: 'Usuário ou senha incorretos!' });
   }
 };
 
-export const registerUser =
-  (displayName, password, email) => async (dispatch) => {
-    dispatch({
-      type: USER_REGISTER_REQUEST,
-    });
+// export const login = (email, password) => async (dispatch) => {
+//   try {
+//     const { data } = await axios.post(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/login`, { email, password });
+//     // const idTokenResult = await data.getIdTokenResult();
+//     dispatch({
+//       type: USER_LOGIN_REQUEST,
+//     });
+//     dispatch({
+//       type: USER_LOGIN_SUCCESS,
+//       payload: { ...data, token: data.access_token },
+//     });
+//     localStorage.setItem('user', JSON.stringify(data.access_token));
+//   } catch (error) {
+//     dispatch({
+//       type: USER_LOGIN_FAIL,
+//       payload: 'Usuário ou senha incorretos!',
+//     });
+//   }
+// };
+
+// export const registerUser = (name, password, email) => async (dispatch) => {
+//   dispatch({
+//     type: USER_REGISTER_REQUEST,
+//   });
+//   try {
+//     const { data } = await axios.post(
+//       `${process.env.REACT_APP_SERVER_DOMAIN}/auth`,
+//       {},
+//       {
+//         headers: {
+//           Authorization: idTokenResult.token,
+//         },
+//       }
+//     );
+//     const idTokenResult = await data.getIdTokenResult(true);
+//     dispatch({
+//       type: USER_REGISTER_SUCCESS,
+//       payload: {
+//         ...data,
+//         token: idTokenResult.token,
+//       },
+//     });
+//     dispatch({
+//       type: USER_LOGIN_SUCCESS,
+//       payload: {
+//         ...data,
+//         token: idTokenResult.token,
+//       },
+//     });
+//   } catch (err) {
+//     dispatch({
+//       type: USER_REGISTER_FAIL,
+//       payload: "Ocorreu um erro. Tente novamente",
+//     });
+//   }
+// };
+
+export const register = (userRegister) =>
+  async (dispatch) => {
+    const check = validRegister(userRegister);
+
+    if (check.errLength > 0)
+      return dispatch({ type: USER_REGISTER_FAIL, payload: { errors: check.errMsg } });
+
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_SERVER_DOMAIN}/auth`,
-        {},
-        {
-          headers: {
-            Authorization: idTokenResult.token,
-          },
-        }
-      );
-      const idTokenResult = await data.getIdTokenResult(true);
-      dispatch({
-        type: USER_REGISTER_SUCCESS,
-        payload: {
-          ...data,
-          token: idTokenResult.token,
-        },
-      });
-      dispatch({
-        type: USER_LOGIN_SUCCESS,
-        payload: {
-          ...data,
-          token: idTokenResult.token,
-        },
-      });
+      dispatch({ type: USER_REGISTER_REQUEST });
+
+      const { data } = await axios.post(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/register`, userRegister);
+
+      dispatch({ type: USER_REGISTER_SUCCESS, payload: { ...data } });
+
+      dispatch({ type: USER_LOGIN_SUCCESS, payload: { ...data } });
+
     } catch (err) {
-      dispatch({
-        type: USER_REGISTER_FAIL,
-        payload: "Ocorreu um erro. Tente novamente",
-      });
+      dispatch({ type: USER_REGISTER_FAIL, payload: "Ocorreu um erro. Tente novamente" });
+    }
+  };
+
+export const refreshToken = () => async (dispatch) => {
+  const logged = localStorage.getItem('logged');
+  if (logged !== 'vo-di-pizza') return;
+
+  try {
+    const res = await axios.post(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/refresh_token`);
+
+    console.log(res, 'res');
+
+    dispatch({ type: 'AUTH', payload: res.data });
+
+    dispatch({ type: 'ALERT', payload: {} });
+  } catch (err) {
+    dispatch({ type: 'ALERT', payload: { errors: err.response.data.msg } });
+    localStorage.removeItem('logged');
+  }
+};
+
+export const logout = (token) =>
+  async (dispatch) => {
+    const result = await checkTokenExp(token, dispatch);
+    const access_token = result ? result : token;
+
+    try {
+      localStorage.removeItem('logged');
+      dispatch({ type: USER_LOGOUT });
+      await axios.post(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/logout`, access_token);
+    } catch (err) {
+      dispatch({ type: 'AUTH', payload: { errors: err.response.data.msg } });
     }
   };
 
@@ -130,9 +200,7 @@ export const addAddress = (address) => async (dispatch, getState) => {
       type: CREATE_ADDRESS_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -166,9 +234,7 @@ export const updateAddress = (_id, address) => async (dispatch, getState) => {
       type: UPDATE_ADDRESS_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -202,9 +268,7 @@ export const getAddress = (_id) => async (dispatch, getState) => {
       type: ADDRESS_DETAILS_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -234,9 +298,7 @@ export const deleteAddress = (_id) => async (dispatch, getState) => {
       type: DELETE_ADDRESS_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -269,9 +331,7 @@ export const applyCoupon = (coupon) => async (dispatch, getState) => {
       type: APPLY_COUPON_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -306,9 +366,7 @@ export const removeCoupon = () => async (dispatch, getState) => {
       type: REMOVE_COUPON_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -342,9 +400,7 @@ export const addProductToWishlist = (productId) => async (dispatch, getState) =>
       type: ADD_PRODUCT_TO_WISHLIST_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -378,9 +434,7 @@ export const getWishlist = () => async (dispatch, getState) => {
       type: GET_WISHLIST_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -410,9 +464,7 @@ export const removeProductFromWishlist = (productId) => async (dispatch, getStat
       type: REMOVE_PRODUCT_FROM_WISHLIST_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,

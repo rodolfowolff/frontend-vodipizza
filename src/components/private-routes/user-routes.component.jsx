@@ -9,7 +9,7 @@ const UserRoute = ({ children, ...rest }) => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin;
 
-    return userInfo.token ? <Route {...rest} /> : <LoadRedirect/>
+    return userInfo && userInfo.token ? <Route {...rest} /> : <LoadRedirect/>
 }
 
 export default UserRoute
