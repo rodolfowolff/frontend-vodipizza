@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -12,10 +12,7 @@ import {
   // SIGN_IN_PAGE_CONNECT_WITH_GOOGLE,
 } from '../../../constants/auth.constants';
 
-import {
-  login,
-  // loginWithGoogle,
-} from '../../../redux/reducers/user/user.actions';
+import { login } from '../../../redux/reducers/user/user.actions';
 
 import Logo from '../../../assets/images/vo_di_pizza_logo.png';
 // import { ReactComponent as Google } from '../../../assets/images/icons8-google.svg';
@@ -24,21 +21,20 @@ import FormInput from '../../../components/form-input/form-input.component.jsx';
 import Notification from '../../../components/notification/notification.component.jsx';
 import CustomButton from '../../../components/custom-button/custom-button.component.jsx';
 
-const Login = () => {
+const Login = ({ history }) => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
-  const params = useParams();
   const userLogin = useSelector((state) => state.userLogin);
+
+  console.log('userLogin', userLogin);
 
   const { loading, error, userInfo } = userLogin;
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const roleBasedRedirect = () => {
-      const intendedRoute = params.from;
+      const intendedRoute = history.location.state;
       if (intendedRoute) {
-        return intendedRoute;
+        return intendedRoute.from;
       } else {
         if (userInfo.role === 'admin') {
           return '/admin/dashboard';
@@ -49,18 +45,21 @@ const Login = () => {
     };
 
     if (error) {
-      toast(
-        <Notification error headline='Erro de login'>
-          {error}
-        </Notification>
-      );
-    } else {
+      // toast(
+        return toast.error(
+          error.message || 'Something went wrong. Please try again later.'
+        );
+        // <Notification error headline='Erro de login'>
+        //   {error}
+        // </Notification>
+      // );
+    } 
+    // else {
       if (userInfo) {
-        {console.log('userInfo', userInfo)}
-        navigate(roleBasedRedirect());
+        history.push(roleBasedRedirect());
       }
-    }
-  }, [navigate, userInfo, error]);
+    // }
+  }, [history, userInfo, error]);
 
   const {
     register,
@@ -81,9 +80,9 @@ const Login = () => {
   // };
 
   return (
-    <div className='max-h-5/6 bg-blue-gray-50 flex flex-col justify-center py-16 sm:px-6 lg:px-8'>
+    <div className='max-h-5/6 bg-blue-gray-50 flex flex-col justify-center py-6 sm:px-6 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
-        <img className='mx-auto h-12 w-auto' src={Logo} alt='Keke Cook' />
+        <img className='mx-auto h-12 w-auto' src={Logo} alt='Vo di pizza logo' />
         <h2 className='mt-6 text-center text-3xl font-hind font-extrabold text-blue-gray-900'>
           {SIGN_IN_PAGE}
         </h2>
