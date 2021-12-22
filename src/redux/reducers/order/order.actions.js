@@ -26,9 +26,7 @@ export const createOrder = (paymentResponse, address) => async (dispatch, getSta
       type: ORDER_CREATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -61,9 +59,7 @@ export const getOrderDetails = (_id) => async (dispatch, getState) => {
       type: ORDER_DETAILS_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
@@ -94,9 +90,7 @@ export const payOrder =
         type: ORDER_PAY_REQUEST,
       });
 
-      const {
-        userLogin: { userInfo },
-      } = getState();
+      const { userLogin: { userInfo } } = getState();
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -132,9 +126,7 @@ export const updateOrderStatus =
         type: ORDER_UPDATE_STATUS_REQUEST,
       });
 
-      const {
-        userLogin: { userInfo },
-      } = getState();
+      const { userLogin: { userInfo } } = getState();
       const config = {
         headers: {
           Authorization: userInfo.token,
@@ -168,9 +160,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
       type: ORDER_LIST_USER_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -200,9 +190,7 @@ export const listAllOrders = () => async (dispatch, getState) => {
       type: ORDER_LIST_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
