@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^5.9.0",
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@react-pdf/renderer": "^2.0.21",
@@ -14,6 +13,7 @@
     "draft-convert": "^2.1.12",
     "draft-js": "^0.11.7",
     "html-to-draftjs": "^1.5.0",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "moment": "^2.29.1",
@@ -23,7 +23,6 @@
     "react-instantsearch-dom": "^6.16.0",
     "react-multi-select-component": "^4.1.14",
     "react-responsive-carousel": "^3.2.22",
-    "react-router-dom": "^6.0.2",
     "react-scripts": "^2.1.3",
     "react-toastify": "^8.1.0",
     "redux-devtools-extension": "^2.13.9",
@@ -53,6 +52,7 @@
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.5",
     "react-redux": "^7.2.6",
+    "react-router-dom": "^5.2.0",
     "redux": "^4.1.0",
     "tailwindcss": "^3.0.5"
   }
