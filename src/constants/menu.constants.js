@@ -7,7 +7,7 @@ export const MENU_HEADER_LINKS = [
   {
     id: 3,
     text: 'Produtos',
-    url: '/products',
+    url: '/product',
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ export const USER_HEADER_MENU_LINKS = [
   {
     id: 4,
     text: 'Produtos',
-    url: '/products',
+    url: '/product',
   },
   {
     id: 5,
