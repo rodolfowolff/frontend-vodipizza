@@ -28,7 +28,7 @@ export const updateCart =
     const cart = JSON.parse(localStorage.getItem('cart'));
 
     const updatedCart = cart.map((product) =>
-      product?.c_id === cartItemId ? { ...product, quantity } : product
+      product.c_id === cartItemId ? { ...product, quantity } : product
     );
 
     dispatch({
@@ -39,7 +39,6 @@ export const updateCart =
   };
 
 export const removeFromCart = (cartItemId) => (dispatch, getState) => {
-  console.log(cartItemId);
   dispatch({
     type: CART_REMOVE_PRODUCT,
     payload: cartItemId,
@@ -54,16 +53,14 @@ export const createCart = (cart) => async (dispatch, getState) => {
       type: CART_CREATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
       },
     };
 
-    const { data } = await axios.post(`/api/v1/cart/`, { cart }, config);
+    const { data } = await axios.post(`${process.env.REACT_APP_SERVER_DOMAIN}/cart`, { cart }, config);
 
     dispatch({
       type: CART_CREATE_SUCCESS,
@@ -90,7 +87,7 @@ export const listCartDetails = (token) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`/api/v1/cart/`, config);
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_DOMAIN}/cart`, config);
     dispatch({
       type: CART_DETAILS_SUCCESS,
       payload: data,
@@ -112,16 +109,14 @@ export const emptyUserCart = () => async (dispatch, getState) => {
       type: EMPTY_CART_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
       },
     };
 
-    const { data } = await axios.delete(`/api/v1/cart/`, config);
+    const { data } = await axios.delete(`${process.env.REACT_APP_SERVER_DOMAIN}/cart`, config);
 
     dispatch({
       type: EMPTY_CART_SUCCESS,
