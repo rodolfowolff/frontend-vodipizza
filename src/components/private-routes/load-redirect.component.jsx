@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Modal from '../modal/modal.component.jsx';
 import Loader from '../loader/loader.component.jsx';
@@ -7,13 +7,14 @@ import Loader from '../loader/loader.component.jsx';
 const LoadRedirect = () => {
   const [countDown, setCountDown] = useState(5);
   const [openLoad, setOpenLoad] = useState(false);
-  const history = useNavigate();
+  const history = useHistory();
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCountDown((currentCountDown) => --currentCountDown);
-    }, 2000);
+    }, 1000);
     setOpenLoad(true);
+
     if (countDown === 0) {
       history.push('/');
     }
