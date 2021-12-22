@@ -27,7 +27,7 @@ export const listProducts = (size) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_SERVER_DOMAIN}/products?size=${size}`
+      `${process.env.REACT_APP_SERVER_DOMAIN}/product?size=${size}`
     );
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -47,7 +47,7 @@ export const listProducts = (size) => async (dispatch) => {
 export const listProductDetails = (slug) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
-    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_DOMAIN}/products/${slug}`);
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_DOMAIN}/product/${slug}`);
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
       payload: data,
@@ -78,7 +78,7 @@ export const deleteProduct = (slug) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`${process.env.REACT_APP_SERVER_DOMAIN}/products/${slug}`, config);
+    await axios.delete(`${process.env.REACT_APP_SERVER_DOMAIN}/product/${slug}`, config);
 
     dispatch({
       type: PRODUCT_DELETE_SUCCESS,
@@ -100,9 +100,7 @@ export const createProduct = (product) => async (dispatch, getState) => {
       type: PRODUCT_CREATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
@@ -110,7 +108,7 @@ export const createProduct = (product) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(
-      `${process.env.REACT_APP_SERVER_DOMAIN}/products/`, product, config
+      `${process.env.REACT_APP_SERVER_DOMAIN}/product/`, product, config
     );
 
     dispatch({
@@ -134,16 +132,14 @@ export const updateProduct = (slug, product) => async (dispatch, getState) => {
       type: PRODUCT_UPDATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         Authorization: userInfo.token,
       },
     };
     const { data } = await axios.put(
-      `${process.env.REACT_APP_SERVER_DOMAIN}/products/${slug}`,
+      `${process.env.REACT_APP_SERVER_DOMAIN}/product/${slug}`,
       product,
       config
     );
@@ -169,7 +165,7 @@ export const listSortNewProducts =
       try {
         dispatch({ type: PRODUCT_SORT_NEW_REQUEST });
         const { data } = await axios.get(
-          `${process.env.REACT_APP_SERVER_DOMAIN}/products/filter?sort=${sort}&order=${order}&pageNumber=${pageNumber}`
+          `${process.env.REACT_APP_SERVER_DOMAIN}/product/filter?sort=${sort}&order=${order}&pageNumber=${pageNumber}`
         );
         dispatch({
           type: PRODUCT_SORT_NEW_SUCCESS,
@@ -192,7 +188,7 @@ export const listSortSoldProducts =
       try {
         dispatch({ type: PRODUCT_SORT_TOP_REQUEST });
         const { data } = await axios.get(
-          `${process.env.REACT_APP_SERVER_DOMAIN}/products/filter?sort=${sort}&order=${order}&pageNumber=${pageNumber}`
+          `${process.env.REACT_APP_SERVER_DOMAIN}/product/filter?sort=${sort}&order=${order}&pageNumber=${pageNumber}`
         );
         dispatch({
           type: PRODUCT_SORT_TOP_SUCCESS,

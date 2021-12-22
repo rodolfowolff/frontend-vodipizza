@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
   return (
     <div className='space-y-4 group rounded-xl hover:bg-transparent hover:shadow-2xl p-2'>
       <div className=''>
-          <Link to={`/products/${slug}`}>
+          <Link to={`/product/${slug}`}>
             <div className='pb-5/6 relative'>
               <img
                 className='h-full w-full object-cover absolute rounded-lg shadow-md'

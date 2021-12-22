@@ -16,7 +16,7 @@ import DOMPurify from 'dompurify';
 import CustomButton from '../../components/custom-button/custom-button.component.jsx';//
 import CustomLink from '../../components/custom-link/custom-link.component';//
 import SlideOver from '../../components/slide-over/slide-over.component.jsx';//
-// import SlideOverCartItem from '../../components/slide-over-cart-item/slide-over-cart-item.component';
+import SlideOverCartItem from '../../components/slide-over-cart-item/slide-over-cart-item.component';
 import PizzaPage from '../../components/product-types/pizza/pizza-page.component';//
 // import Notification from '../../components/notification/notification.component.jsx';
 import ProductQuantity from '../../components/product-quantity/product-quantity.component';//
@@ -24,12 +24,11 @@ import ProductQuantity from '../../components/product-quantity/product-quantity.
 import {
   listProductDetails,
 } from '../../redux/reducers/product/product.actions';//
-// import { addToCart } from '../../redux/reducers/cart/cart.actions';
+import { addToCart } from '../../redux/reducers/cart/cart.actions';
 // import { addProductToWishlist } from '../../redux/reducers/user/user.actions';
 // import { ADD_PRODUCT_TO_WISHLIST_RESET } from '../../redux/reducers/user/user.types';
 
 import { MULTISELECT_INTERNATIONALIZATION } from '../../constants/admin.product.constants';//
-import { PRODUCT_PAGE_SVG_PATTERN } from '../../constants/product-page.constants';//
 import { currencyFormatter } from '../../utils/functions';
 
 import { ArrowRenderer, CustomClearIcon } from '../../utils/components';
@@ -41,8 +40,8 @@ const Product = () => {
   const params = useParams();
   const dispatch = useDispatch();
 
-  // const cart = useSelector((state) => state.cart);
-  // const { cartProducts } = cart;
+  const cart = useSelector((state) => state.cart);
+  const { cartProducts } = cart;
   const productDetails = useSelector((state) => state.productDetails);
   const { product } = productDetails;
   // const userLogin = useSelector((state) => state.userLogin);
@@ -101,9 +100,10 @@ const Product = () => {
       title: product.title,
       slug: product.slug,
       imageURL: product.images[0].imageURL,
-      price: product.price,
+      price,
       category: product.category.name,
       productType: product.productType,
+      quantity,
       shipping: product.shipping,
     };
 
@@ -122,8 +122,7 @@ const Product = () => {
         description: pizzaDescription,
       };
     }
-    // dispatch(addToCart(cartItem));
-    dispatch(console.log(cartItem));
+    dispatch(addToCart(cartItem));
     setOpenSlideOver(true);
   };
 
@@ -273,18 +272,16 @@ const Product = () => {
 
   return (
     <>
-      <div className='relative my-7'>
-        <div className='lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-16 lg:items-start'>
-          <div className='relative sm:py-16 lg:py-0'>
+      <div className='relative'>
+        <div className='lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:items-start'>
+          <div className='relative'>
             <div
               aria-hidden='true'
               className='hidden sm:block lg:absolute lg:inset-y-0 lg:right-0 lg:w-screen'
             >
               <div className='absolute inset-y-0 right-1/2 w-full bg-gray-50 rounded-r-3xl lg:right-72' />
-                {PRODUCT_PAGE_SVG_PATTERN}
               </div>
-              <div className='relative mx-auto max-w-full px-4 sm:max-w-md md:max-w-2xl sm:px-6 lg:px-0 lg:max-w-none lg:py-20'>
-                {console.log(product)}
+              <div className='relative mx-auto max-w-full px-4 sm:max-w-md md:max-w-2xl sm:px-6 lg:px-4 lg:max-w-none lg:py-20'>
                 {product ? (
                   <Carousel
                     showArrows={false}
@@ -422,12 +419,12 @@ const Product = () => {
             type='link-button'
             custom='w-full text-base justify-between px-4 py-4 text-white bg-rose-500 hover:bg-rose-600 sm:col-start-1 sm:text-sm uppercase col-span-2'
           >
-            Ver minha cesta
+            Ver meu carrinho
             <ArrowRightIcon className='ml-3 -mr-1 h-5 w-5' aria-hidden='true' />
           </CustomLink>
         }
       >
-        {/* <SlideOverCartItem cartProducts={cartProducts} /> */}
+        <SlideOverCartItem cartProducts={cartProducts} />
       </SlideOver>
     </>
   );

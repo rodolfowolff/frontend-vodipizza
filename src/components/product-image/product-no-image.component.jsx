@@ -7,7 +7,7 @@ const ProductNoImage = () => {
       <img
         className='absolute inset-0 h-full w-full object-cover'
         src={NoImage}
-        alt='Keke Cook'
+        alt='Vo di pizza'
       />
       <div className='relative px-8'>
         <blockquote className='mt-8'>

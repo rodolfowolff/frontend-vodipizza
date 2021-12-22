@@ -21,7 +21,7 @@ const ProductQuantity = ({
           Quantidade
         </label>
       )}
-      <span className='relative z-0 inline-flex rounded-md mt-2 w-full place-content-center'>
+      <span className='relative z-0 inline-flex rounded-md mt-2 w-full'>
         <button
           type='button'
           name='remove'
