@@ -26,6 +26,7 @@ import {
   wishlistListReducer,
   removeFromWishlistReducer
 } from './reducers/user/user.reducers';
+
 import {
   categoryCreateReducer,
   categoryListReducer,
@@ -33,6 +34,7 @@ import {
   categoryDetailsReducer,
   categoryUpdateReducer,
 } from './reducers/category/category.reducers';
+
 import {
   productCreateReducer,
   productListReducer,

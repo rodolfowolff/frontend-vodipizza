@@ -1,8 +1,10 @@
 import React, { lazy, Suspense, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { refreshToken } from './redux/reducers/user/user.actions';
 
 import LoaderV2 from './components/loader/loader-v2.component.jsx';
 
@@ -13,23 +15,21 @@ const History = lazy(() => import('./pages/user/history.page.jsx'));
 const Login = lazy(() => import('./pages/auth/login/login.page.jsx'));
 const Home = lazy(() => import('./pages/home/home.page.jsx'));
 const Product = lazy(() => import('./pages/product/product.page.jsx'));
+const Cart = lazy(() => import('./pages/cart/cart.page.jsx'));
 
 const Header = lazy(() => import('./components/header/header.component.jsx'));
-const UserRoute = lazy(() =>
-  import('./components/private-routes/user-routes.component.jsx')
-);
+const UserRoute = lazy(() => import('./components/private-routes/user-routes.component.jsx'));
 const Footer = lazy(() => import('./components/footer/footer.component.jsx'));
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      dispatch(getCurrentUser(token));
-    } else {
-      dispatch(getCurrentUser(null));
-    }
+    // dispatch(refreshToken());
+    // const token = localStorage.getItem('logged');
+    // if (token) {
+    //   dispatch(getCurrentUser(token));
+    // }
   }, [dispatch]);
 
   return (
@@ -40,14 +40,32 @@ const App = () => {
         closeButton={ false }
         style={ { width: '25rem', padding: '0px' } }
       />
-      <Routes>
-        <Route exact path='/' element={ <Home /> }></Route>
+      <Switch>
+        <Route exact path='/' component={ Home } />
+        <Route exact path='/login' component={ Login } />
+        {/* <Route exact path='/register' component={ Register } /> */ }
+        {/* <Route exact path='/register/finish' component={ FinishRegistration } /> */ }
+        {/* <Route exact path='/password/new' component={ ForgotPassword } /> */ }
+        {/* <Route exact path='/products' component={ Products } /> */ }
+        <Route exact path='/cart' component={ Cart } />
+        <Route exact path='/product/:slug' component={ Product } />
+        {/* <Route exact path='/categories/:slug' component={ Category } /> */ }
+        {/* <UserRoute exact path='/me/delivery' component={ Checkout } /> */ }
+        {/* <UserRoute exact path='/me/payment' component={ Payment } /> */ }
+        <UserRoute exact path='/me/account' component={ History } />
+        {/* <UserRoute exact path='/me/password/update' component={ Password } /> */ }
+        {/* <UserRoute exact path='/me/wishlist' component={ WishList } /> */ }
+
+        {/* <Route exact path='/' element={ <Home /> }></Route>
         <Route exact path={ '/login' } element={ <Login /> }></Route>
+        <Route exact path={ '/cart' } element={ <Cart /> }></Route>
         <Route exact path={ '/products/:slug' } element={ <Product /> }></Route>
-        <Route element={ <UserRoute /> }>
-          <Route path="/me/account" element={ <History /> } />
-        </Route>
-      </Routes>
+        <UserRoute exact path={ '/me/account' } element={ <History /> }></UserRoute> */}
+        {/* <Route exact path={ '/me/account' } element={ <UserRoute component={ History } /> }></Route> */ }
+        {/* <Route exact path="/me/account" element={ <UserRoute /> }>
+          <Route exact path="/me/account" element={ <History /> } />
+        </Route> */}
+      </Switch>
       <Footer />
       <ToastContainer />
     </Suspense>
