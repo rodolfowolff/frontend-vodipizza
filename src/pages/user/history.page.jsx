@@ -36,7 +36,8 @@ const History = () => {
           headline={'Historico'}
           description={HISTORY_DESCRIPTION}
         >
-          {orders.length <= 0 ? (
+
+          { orders && orders.length <= 0 ? (
             <div className='py-24 sm:py-32'>
               <div className='max-w-md mx-auto pl-4 pr-8 sm:max-w-lg sm:px-6 lg:max-w-7xl lg:px-8 space-y-10'>
                 <h1 className='text-4xl leading-10 tracking-tight font-extrabold font-hind text-blue-gray-800 text-center sm:text-5xl sm:leading-none lg:text-6xl'>
@@ -50,7 +51,7 @@ const History = () => {
                 </div>
                 <div className='max-w-2xl mx-auto py-3 px-4 text-center sm:py-3 sm:px-6 lg:px-8'>
                   <CustomLink
-                    url='/products'
+                    url='/product'
                     type='link-button'
                     custom='mt-8 w-full bg-rose-500 py-3 px-5 text-base font-medium text-white hover:bg-rose-600 sm:w-auto'
                   >
@@ -60,7 +61,7 @@ const History = () => {
               </div>
             </div>
           ) : (
-            orders.map((order) => <Order key={order._id} order={order} address={order.address} />)
+            orders && orders.map((order) => <Order key={order._id} order={order} address={order.address} />)
           )}
         </UserNavChildrenLayout>
       </UserNav>
