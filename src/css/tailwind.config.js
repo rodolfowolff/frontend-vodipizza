@@ -38,16 +38,9 @@ module.exports = {
       },
     },
   },
-  variants: {
-    extend: {},
-  },
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-    [
-      require('@tailwindcss/aspect-ratio'),
-      require('@tailwindcss/forms'),
-      require('@tailwindcss/typography')
-    ]: {},
-  }
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography')
+  ],
 };
