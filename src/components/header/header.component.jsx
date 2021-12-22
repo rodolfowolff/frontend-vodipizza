@@ -1,24 +1,41 @@
-import React from 'react';
-import { Disclosure } from '@headlessui/react';
-import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline';
+import React, {Fragment} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
+import { logout } from '../../redux/reducers/user/user.actions';
+
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import Logo from '../../assets/images/vo_di_pizza_logo.png';
+import DefaultUser from '../../assets/images/default-user.png';
 
 import { MENU_HEADER_LINKS } from '../../constants/menu.constants';
 import { SIGN_IN_BUTTON_HEADER } from '../../constants/auth.constants';
 
 import CustomLink from '../custom-link/custom-link.component.jsx';
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
+
 const Header = () => {
-  const history = useNavigate();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const cart = useSelector((state) => state.cart);
+  const { cartProducts } = cart;
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const logoutHandler = () => {
+    console.log('userInfo.access_token', userInfo.access_token);
+    dispatch(logout(userInfo.access_token));
     history.push('/');
   };
+
   return (
-    <Disclosure as='nav' className='bg-white shadow '>
+
+    <Disclosure as='nav' className='bg-white shadow'>
       {({ open }) => (
         <>
           <>
@@ -67,7 +84,102 @@ const Header = () => {
                   >
                     <span className='sr-only'>Seu carrinho</span>
                     <ShoppingCartIcon className='h-7 w-7' aria-hidden='true' />
+                  {cartProducts.length > 0 && (
+                      <span className='absolute top-0 right-0 h-5 w-5 rounded-full ring-2 ring-white bg-rose-500 flex justify-center text-white items-center text-xs font-poppins'>
+                        {cartProducts.length}
+                      </span>
+                    )}
                   </Link>
+                  {userInfo ? (
+                    <Menu as='div' className='ml-4 relative flex-shrink-0'>
+                      {({ open }) => (
+                        <>
+                          <div>
+                            <Menu.Button className='bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'>
+                              <span className='sr-only'>Abrir menu do usuário</span>
+                              <img
+                                className='h-8 w-8 rounded-full'
+                                src={userInfo.photoURL ? userInfo.photoURL : DefaultUser}
+                                alt={userInfo.name ? userInfo.name : 'Usuário'}
+                              />
+                            </Menu.Button>
+                          </div>
+                          <Transition
+                            show={open}
+                            as={Fragment}
+                            enter='transition ease-out duration-100'
+                            enterFrom='transform opacity-0 scale-95'
+                            enterTo='transform opacity-100 scale-100'
+                            leave='transition ease-in duration-75'
+                            leaveFrom='transform opacity-100 scale-100'
+                            leaveTo='transform opacity-0 scale-95'
+                          >
+                            <Menu.Items
+                              static
+                              className='z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'
+                            >
+                              {userInfo.role === 'subscriber' && (
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <Link
+                                      to={'/me/account'}
+                                      className={classNames(
+                                        active ? 'bg-blue-gray-100' : '',
+                                        'block capitalize px-4 py-2 text-sm text-blue-gray-700'
+                                      )}
+                                    >
+                                      Minha conta
+                                    </Link>
+                                  )}
+                                </Menu.Item>
+                              )}
+                              {userInfo.role === 'admin' && (
+                                <>
+                                  <Menu.Item>
+                                    {({ active }) => (
+                                      <Link
+                                        to={'/me/account'}
+                                        className={classNames(
+                                          active ? 'bg-blue-gray-100' : '',
+                                          'block capitalize px-4 py-2 text-sm text-blue-gray-700'
+                                        )}
+                                      >
+                                        Minha conta
+                                      </Link>
+                                    )}
+                                  </Menu.Item>
+                                  <Menu.Item>
+                                    {({ active }) => (
+                                      <Link
+                                        to={'/admin/dashboard'}
+                                        className={classNames(
+                                          active ? 'bg-blue-gray-100' : '',
+                                          'block capitalize px-4 py-2 text-sm text-blue-gray-700'
+                                        )}
+                                      >
+                                        Conta de administrador
+                                      </Link>
+                                    )}
+                                  </Menu.Item>
+                                </>
+                              )}
+                              <Menu.Item>
+                                <CustomLink
+                                  type='button'
+                                  role='menuitem'
+                                  onClick={logoutHandler}
+                                >
+                                  Sair
+                                </CustomLink>
+                              </Menu.Item>
+                            </Menu.Items>
+                          </Transition>
+                        </>
+                      )}
+                    </Menu>
+                  ) 
+                  : 
+                  (
                     <CustomLink
                       url='/login'
                       type='link-button'
@@ -75,6 +187,7 @@ const Header = () => {
                     >
                       {SIGN_IN_BUTTON_HEADER}
                     </CustomLink>
+                  )}
                 </div>
               </div>
             </div>
@@ -89,17 +202,38 @@ const Header = () => {
                   );
                 })}
               </div>
-              <div className='flex justify-evenly pt-4 pb-3 border-t border-gray-200'>
+              { userInfo ? (
+              <div className='pt-4 pb-3 border-t border-gray-200'>
                 <div className='flex items-center px-4'>
+                  <div className='flex-shrink-0'>
+                    <img
+                      className='h-10 w-10 rounded-full'
+                      src={userInfo.photoURL ? userInfo.photoURL : DefaultUser}
+                      alt={userInfo.name ? userInfo.name : 'Usuário'}
+                    />
+                  </div>
+                  <div className='ml-3'>
+                    <div className='text-base font-medium text-gray-800'>
+                      {userInfo.name ? userInfo.name : 'Usuário'}
+                    </div>
+                    <div className='text-sm font-medium text-gray-500'>
+                      {userInfo.email ? userInfo.email : 'email@email.com'}
+                    </div>
+                  </div>
                   <Link
                     to={'/cart'}
                     className='ml-auto flex-shrink-0 bg-white p-1 text-blue-gray-400 rounded-full hover:text-blue-gray-500'
                   >
                     <span className='sr-only'>Seu carrinho</span>
                     <ShoppingCartIcon className='h-7 w-7' aria-hidden='true' />
+                    {cartProducts.length > 0 && (
+                      <span className='absolute top-60 right-3 h-4 w-5 rounded-full ring-2 ring-white bg-rose-500 flex justify-center text-white items-center text-xs font-poppins'>
+                        {cartProducts.length}
+                      </span>
+                    )}
                   </Link>
                 </div>
-                <div className='space-y-1'>
+                <div className='space-y-1 ml-auto justify-center mt-4'>
                   <CustomLink
                     type='button'
                     role='menuitem'
@@ -110,6 +244,20 @@ const Header = () => {
                   </CustomLink>
                 </div>
               </div>
+              ) 
+              : 
+              (
+                <div className='flex px-10 pb-3 justify-center'>
+                <CustomLink
+                  url='/login'
+                  type='link-button'
+                  onClick={open = true}
+                  custom='w-full flex py-3 rounded-full text-base font-medium text-white bg-orange-600 hover:bg-orange-500 md:py-4 md:text-lg md:px-10'
+                >
+                  {SIGN_IN_BUTTON_HEADER}
+                </CustomLink>
+                </div>
+              )}
             </Disclosure.Panel>
           </>
         </>
